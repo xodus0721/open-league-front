@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 import styled from "styled-components";
 import Link from "next/link";
 
@@ -28,16 +28,21 @@ const SignIn = () => {
         email,
         password,
       })
-      .then((response) => {
+      .then((response: AxiosResponse) => {
         if (response.status == 200) setStatus("로그인 되었습니다!");
       })
-      .catch((error) => {
-        if (error.response.status == 401)
-          setStatus("비밀번호가 일치하지 않습니다.");
-        else if (error.response.status == 404)
-          setStatus("계정이 존재하지 않습니다.");
-        else if (error.response.status == 412)
-          setStatus("입력란에 공백이 있습니다.");
+      .catch((error: AxiosError) => {
+        switch (error.response.status) {
+          case 401:
+            setStatus("비밀번호가 일치하지 않습니다.");
+            break;
+          case 404:
+            setStatus("계정이 존재하지 않습니다.");
+            break;
+          case 412:
+            setStatus("입력란에 공백이 있습니다.");
+            break;
+        }
       });
   };
 
