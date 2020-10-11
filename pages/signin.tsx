@@ -3,7 +3,9 @@ import axios from "axios";
 import styled from "styled-components";
 import Link from "next/link";
 
-const Login = () => {
+//TODO  discordsignin.tsx 와 signin.tsx 병합
+
+const SignIn = () => {
   const [account, setAccount] = useState({
     email: "",
     password: "",
@@ -20,9 +22,9 @@ const Login = () => {
     });
   };
 
-  const login = async () => {
+  const signIn = async () => {
     await axios
-      .post("https://open-league-back.herokuapp.com/api/v1/auth/signin", {
+      .post(`${process.env.NEXT_PUBLIC_BACKEND}/api/v1/auth/signin`, {
         email,
         password,
       })
@@ -39,9 +41,20 @@ const Login = () => {
       });
   };
 
+  const authorizationCodegrant = async () => {
+    window.open(
+      `https://discord.com/api/oauth2/authorize?client_id=${process.env.NEXT_PUBLIC_DISCORD_ID}&redirect_uri=${process.env.NEXT_PUBLIC_REDIRECT_URI}&response_type=code&scope=identify%20email`,
+      "_blank"
+    );
+    /*
+     * accessToken
+     * refreshToken
+     */
+  };
+
   return (
     <div>
-      <h1>login</h1>
+      <h1>sign in</h1>
       <input
         type="text"
         name="email"
@@ -56,11 +69,22 @@ const Login = () => {
         onChange={inputAccount}
       />
       <br />
-      <button onClick={login}>Login</button>
+      <button onClick={signIn}>Sign In</button>
       <div>{status}</div>
-      <Link href="/register">Need a sign up?</Link>
+      <br />
+      <h1>discord sign in</h1>
+      <button onClick={authorizationCodegrant}>Try This!</button>
+      <br />
+      <br />
+      <Link href="/signup">
+        <a>Need a sign up?</a>
+      </Link>
+      <br />
+      <Link href="/">
+        <a>Home</a>
+      </Link>
     </div>
   );
 };
 
-export default Login;
+export default SignIn;

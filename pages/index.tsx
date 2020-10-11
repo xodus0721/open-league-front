@@ -5,7 +5,11 @@ const Index = () => {
   return (
     <div>
       <div>
-        <Link href="/login">Login Page</Link>
+        <Link href="/signin">Sign In Page</Link>
+        <br />
+        <Link href="/signup">Sign Up Page</Link>
+        <br />
+        <Link href="/friends">Friends Page</Link>
       </div>
     </div>
   );
