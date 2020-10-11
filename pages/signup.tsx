@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import axios from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 import styled from "styled-components";
 import Link from "next/link";
 
 const SignUp = () => {
+  const [status, setStatus] = useState("");
   const [profile, setProfile] = useState({
     name: "",
     password: "",
@@ -20,11 +21,28 @@ const SignUp = () => {
   };
 
   const signUp = async () => {
-    await axios.post(`${process.env.NEXT_PUBLIC_BACKEND}/api/v1/auth/signup`, {
-      email,
-      name,
-      password,
-    });
+    await axios
+      .post(`${process.env.NEXT_PUBLIC_BACKEND}/api/v1/auth/signup`, {
+        email,
+        name,
+        password,
+      })
+      .then((response: AxiosResponse) => {
+        if (response.status == 200) setStatus("회원가입에 성공했습니다!");
+      })
+      .catch((error: AxiosError) => {
+        switch (error.response.status) {
+          case 409:
+            setStatus(error.response.data);
+            break;
+          case 412:
+            setStatus("입력란에 공백이 있습니다.");
+            break;
+          case 500:
+            setStatus("알 수 없는 에러가 발생했습니다.");
+            break;
+        }
+      });
   };
 
   return (
@@ -53,6 +71,7 @@ const SignUp = () => {
       <br />
       <button onClick={signUp}>Sign Up</button>
       <br />
+      <div>{status}</div>
       <br />
       <Link href="/signin">
         <a>Go to Login</a>
