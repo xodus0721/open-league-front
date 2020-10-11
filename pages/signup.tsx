@@ -21,15 +21,22 @@ const SignUp = () => {
 
   const signUp = async () => {
     await axios.post(`${process.env.NEXT_PUBLIC_BACKEND}/api/v1/auth/signup`, {
+      email,
       name,
       password,
-      email,
     });
   };
 
   return (
     <div>
       <h1>sign up</h1>
+      <input
+        type="text"
+        name="email"
+        placeholder="Enter Email"
+        onChange={inputProfile}
+      />
+      <br />
       <input
         type="text"
         name="name"
@@ -44,16 +51,9 @@ const SignUp = () => {
         onChange={inputProfile}
       />
       <br />
-      <input
-        type="text"
-        name="email"
-        placeholder="Enter Email"
-        onChange={inputProfile}
-      />
-      <br />
       <button onClick={signUp}>Sign Up</button>
       <br />
-      <br />  
+      <br />
       <Link href="/signin">
         <a>Go to Login</a>
       </Link>
