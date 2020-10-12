@@ -1,18 +1,18 @@
-import axios, { AxiosError, AxiosResponse } from 'axios';
-import Link from 'next/link';
-import React, { useState } from 'react';
+import axios, { AxiosError, AxiosResponse } from "axios";
+import Link from "next/link";
+import React, { useState } from "react";
 
 const SignIn = () => {
   const [account, setAccount] = useState({
-    email: '',
-    password: '',
+    email: "",
+    password: "",
   });
 
-  const [status, setStatus] = useState('');
+  const [status, setStatus] = useState("");
 
   const { email, password } = account;
 
-  const inputAccount = (e) => {
+  const inputAccount = (e: { target: { name: string; value: string } }) => {
     setAccount({
       ...account,
       [e.target.name]: e.target.value,
@@ -26,21 +26,25 @@ const SignIn = () => {
         password,
       })
       .then((response: AxiosResponse) => {
-        if (response.status === 200) setStatus('로그인 되었습니다!');
+        if (response.status === 200) {
+          localStorage.setItem("accessToken", response.data.accessToken);
+          localStorage.setItem("refreshToken", response.data.refreshToken);
+          setStatus("로그인 되었습니다!");
+        }
       })
       .catch((error: AxiosError) => {
         switch (error.response.status) {
           case 401:
-            setStatus('비밀번호가 일치하지 않습니다.');
+            setStatus("비밀번호가 일치하지 않습니다.");
             break;
           case 404:
-            setStatus('계정이 존재하지 않습니다.');
+            setStatus("계정이 존재하지 않습니다.");
             break;
           case 412:
-            setStatus('입력란에 공백이 있습니다.');
+            setStatus("입력란에 공백이 있습니다.");
             break;
           default:
-            setStatus('알 수 없는 오류가 발생했습니다.');
+            setStatus("알 수 없는 오류가 발생했습니다.");
             break;
         }
       });
@@ -49,7 +53,7 @@ const SignIn = () => {
   const authorizationCodegrant = async () => {
     window.open(
       `https://discord.com/api/oauth2/authorize?client_id=${process.env.NEXT_PUBLIC_DISCORD_ID}&redirect_uri=${process.env.NEXT_PUBLIC_REDIRECT_URI}&response_type=code&scope=identify%20email`,
-      '_blank',
+      "_blank"
     );
     /*
      * accessToken
@@ -74,11 +78,15 @@ const SignIn = () => {
         onChange={inputAccount}
       />
       <br />
-      <button type="button" onClick={signIn}>Sign In</button>
+      <button type="button" onClick={signIn}>
+        Sign In
+      </button>
       <div>{status}</div>
       <br />
       <h1>discord sign in</h1>
-      <button type="button" onClick={authorizationCodegrant}>Discord Sign In</button>
+      <button type="button" onClick={authorizationCodegrant}>
+        Discord Sign In
+      </button>
       <br />
       <br />
       <Link href="/signup">
