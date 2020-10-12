@@ -28,9 +28,8 @@ const callback = () => {
       grantType: 'authorization_code',
       redirectUri: process.env.NEXT_PUBLIC_REDIRECT_URI,
     });
-    const Storage = window.localStorage;
-    Storage.setItem('refreshToken', discord.refresh_token);
-    Storage.setItem('accessToken', discord.access_token);
+    localStorage.setItem('refreshToken', discord.refresh_token);
+    localStorage.setItem('accessToken', discord.access_token);
     sendToken(discord.access_token);
     Router.push('/main');
   };
