@@ -1,15 +1,10 @@
-import React from "react";
-import axios from "axios";
-import styled from "styled-components";
-import Link from "next/link";
+import React from 'react';
 
-const Friends = () => {
-  return (
-    <div>
-      <h1>Add Friends</h1>
-      <div></div>
-    </div>
-  );
-};
+const Friends = () => (
+  <div>
+    <h1>Add Friends</h1>
+    <div />
+  </div>
+);
 
 export default Friends;

@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
-import axios from "axios";
-import Router from "next/router";
+import axios from 'axios';
+import Router from 'next/router';
+import React, { useEffect } from 'react';
 
 const logout = () => {
   const revokeToken = async () => {
@@ -9,23 +9,23 @@ const logout = () => {
       await axios.post(
         `${
           process.env.NEXT_PUBLIC_BACKEND
-        }/api/v1/auth/revoke/${Storage.getItem("accessToken")}`
+        }/api/v1/auth/revoke/${Storage.getItem('accessToken')}`,
       );
       await axios.post(
         `${
           process.env.NEXT_PUBLIC_BACKEND
-        }/api/v1/auth/revoke/${Storage.getItem("refreshToken")}`
+        }/api/v1/auth/revoke/${Storage.getItem('refreshToken')}`,
       );
-      Storage.removeItem("accessToken");
-      Storage.removeItem("refreshToken");
+      Storage.removeItem('accessToken');
+      Storage.removeItem('refreshToken');
     } finally {
-      Router.push("/main");
+      Router.push('/main');
     }
   };
   useEffect(() => {
     revokeToken();
   }, []);
-  return <div></div>;
+  return <div />;
 };
 
 export default logout;

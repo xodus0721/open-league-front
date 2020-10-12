@@ -1,14 +1,12 @@
-import { NextComponentType } from "next";
-import { AppContext, AppInitialProps, AppProps } from "next/app";
-import "../styles/globals.css";
-import { ThemeProvider } from "styled-components";
+import '../styles/globals.css';
+
+import { NextComponentType } from 'next';
+import { AppContext, AppInitialProps, AppProps } from 'next/app';
 
 const MyApp: NextComponentType<AppContext, AppInitialProps, AppProps> = ({
   Component,
   pageProps,
-}) => {
-  return <Component {...pageProps} />;
-};
+}) => <Component {...pageProps} />;
 
 MyApp.getInitialProps = async ({
   Component,

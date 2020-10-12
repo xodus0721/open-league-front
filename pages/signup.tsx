@@ -1,14 +1,13 @@
-import React, { useState } from "react";
-import axios, { AxiosError, AxiosResponse } from "axios";
-import styled from "styled-components";
-import Link from "next/link";
+import axios, { AxiosError, AxiosResponse } from 'axios';
+import Link from 'next/link';
+import React, { useState } from 'react';
 
 const SignUp = () => {
-  const [status, setStatus] = useState("");
+  const [status, setStatus] = useState('');
   const [profile, setProfile] = useState({
-    name: "",
-    password: "",
-    email: "",
+    name: '',
+    password: '',
+    email: '',
   });
 
   const { name, password, email } = profile;
@@ -28,7 +27,7 @@ const SignUp = () => {
         password,
       })
       .then((response: AxiosResponse) => {
-        if (response.status == 200) setStatus("회원가입에 성공했습니다!");
+        if (response.status === 200) setStatus('회원가입에 성공했습니다!');
       })
       .catch((error: AxiosError) => {
         switch (error.response.status) {
@@ -36,10 +35,10 @@ const SignUp = () => {
             setStatus(error.response.data);
             break;
           case 412:
-            setStatus("입력란에 공백이 있습니다.");
+            setStatus('입력란에 공백이 있습니다.');
             break;
-          case 500:
-            setStatus("알 수 없는 에러가 발생했습니다.");
+          default:
+            setStatus('알 수 없는 오류가 발생했습니다.');
             break;
         }
       });
@@ -69,7 +68,7 @@ const SignUp = () => {
         onChange={inputProfile}
       />
       <br />
-      <button onClick={signUp}>Sign Up</button>
+      <button type="button" onClick={signUp}>Sign Up</button>
       <br />
       <div>{status}</div>
       <br />
