@@ -3,8 +3,6 @@ import axios, { AxiosError, AxiosResponse } from "axios";
 import styled from "styled-components";
 import Link from "next/link";
 
-//TODO  discordsignin.tsx 와 signin.tsx 병합
-
 const SignIn = () => {
   const [account, setAccount] = useState({
     email: "",
@@ -78,7 +76,7 @@ const SignIn = () => {
       <div>{status}</div>
       <br />
       <h1>discord sign in</h1>
-      <button onClick={authorizationCodegrant}>Try This!</button>
+      <button onClick={authorizationCodegrant}>Discord Sign In</button>
       <br />
       <br />
       <Link href="/signup">

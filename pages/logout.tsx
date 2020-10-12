@@ -4,20 +4,27 @@ import Router from "next/router";
 
 const logout = () => {
   const revokeToken = async () => {
-    const Storage = window.localStorage;
     try {
       await axios.post(
-        `${
-          process.env.NEXT_PUBLIC_BACKEND
-        }/api/v1/auth/revoke/${Storage.getItem("accessToken")}`
+        `${process.env.NEXT_PUBLIC_BACKEND}/api/v1/auth/revoke`,
+        undefined,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        }
       );
       await axios.post(
-        `${
-          process.env.NEXT_PUBLIC_BACKEND
-        }/api/v1/auth/revoke/${Storage.getItem("refreshToken")}`
+        `${process.env.NEXT_PUBLIC_BACKEND}/api/v1/auth/revoke`,
+        undefined,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("refreshToken")}`,
+          },
+        }
       );
-      Storage.removeItem("accessToken");
-      Storage.removeItem("refreshToken");
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
     } finally {
       Router.push("/main");
     }
