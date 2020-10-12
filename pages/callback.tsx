@@ -1,8 +1,8 @@
-import axios from 'axios';
-import DiscordOAuth2 from 'discord-oauth2';
-import Router, { useRouter } from 'next/router';
-import { ParsedUrlQuery } from 'querystring';
-import React, { useEffect } from 'react';
+import axios from "axios";
+import DiscordOAuth2 from "discord-oauth2";
+import Router, { useRouter } from "next/router";
+import { ParsedUrlQuery } from "querystring";
+import React, { useEffect } from "react";
 
 interface IQuery {
   code?: ParsedUrlQuery;
@@ -22,16 +22,16 @@ const callback = () => {
     const oauth = new DiscordOAuth2();
     const discord = await oauth.tokenRequest({
       code: code.toString(),
-      scope: 'identify email',
+      scope: "identify email",
       clientId: process.env.NEXT_PUBLIC_DISCORD_ID,
       clientSecret: process.env.NEXT_PUBLIC_DISCORD_SECRET,
-      grantType: 'authorization_code',
+      grantType: "authorization_code",
       redirectUri: process.env.NEXT_PUBLIC_REDIRECT_URI,
     });
-    localStorage.setItem('refreshToken', discord.refresh_token);
-    localStorage.setItem('accessToken', discord.access_token);
+    localStorage.setItem("refreshToken", discord.refresh_token);
+    localStorage.setItem("accessToken", discord.access_token);
     sendToken(discord.access_token);
-    Router.push('/main');
+    Router.push("/");
   };
   useEffect(() => {
     getToken();
