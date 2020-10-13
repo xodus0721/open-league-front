@@ -24,6 +24,8 @@
       "error",
       { "variables": false }
     ],
-    "jsx-a11y/anchor-is-valid": "off"
+    "jsx-a11y/anchor-is-valid": "off",
+    "import/no-unresolved": "off",
+    "import/extensions": ["off"]
   }
 }

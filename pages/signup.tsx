@@ -12,7 +12,7 @@ const SignUp = () => {
 
   const { name, password, email } = profile;
 
-  const inputProfile = (e) => {
+  const inputProfile = (e: { target: { name: string; value: string } }) => {
     setProfile({
       ...profile,
       [e.target.name]: e.target.value,
@@ -47,28 +47,15 @@ const SignUp = () => {
   return (
     <div>
       <h1>sign up</h1>
-      <input
-        type="text"
-        name="email"
-        placeholder="Enter Email"
-        onChange={inputProfile}
-      />
+      <input type="text" name="email" placeholder="Enter Email" onChange={inputProfile} />
       <br />
-      <input
-        type="text"
-        name="name"
-        placeholder="Enter Name"
-        onChange={inputProfile}
-      />
+      <input type="text" name="name" placeholder="Enter Name" onChange={inputProfile} />
       <br />
-      <input
-        type="password"
-        name="password"
-        placeholder="Enter Password"
-        onChange={inputProfile}
-      />
+      <input type="password" name="password" placeholder="Enter Password" onChange={inputProfile} />
       <br />
-      <button type="button" onClick={signUp}>Sign Up</button>
+      <button type="button" onClick={signUp}>
+        Sign Up
+      </button>
       <br />
       <div>{status}</div>
       <br />
