@@ -1,8 +1,9 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import Cookies from 'js-cookie';
-import jwtDecode from 'jwt-decode';
 import Link from 'next/link';
 import React, { useState } from 'react';
+
+import getCommonLoginUserInfo from '../middlewares/getCommonLoginUserInfo';
 
 const SignIn = () => {
   const [account, setAccount] = useState({
@@ -21,19 +22,6 @@ const SignIn = () => {
     });
   };
 
-  const getCommonLoginUserInfo = () => {
-    const decoded: {
-      user: {
-        name: string;
-        _id: string;
-        email: string;
-      };
-    } = jwtDecode(localStorage.getItem('accessToken'));
-    const user = decoded.user.name.split('#');
-    Cookies.set('name', user[0]);
-    Cookies.set('tag', `#${user[1]}`);
-  };
-
   const signIn = async () => {
     await axios
       .post(`${process.env.NEXT_PUBLIC_BACKEND}/api/v1/auth/signin`, {
@@ -42,9 +30,8 @@ const SignIn = () => {
       })
       .then((response: AxiosResponse) => {
         if (response.status === 200) {
-          localStorage.setItem('accessToken', response.data.accessToken);
-          localStorage.setItem('refreshToken', response.data.refreshToken);
-          Cookies.set('loginType', 'common');
+          Cookies.set('accessToken', response.data.accessToken);
+          Cookies.set('refreshToken', response.data.refreshToken);
           getCommonLoginUserInfo();
           setStatus('로그인 되었습니다!');
         }

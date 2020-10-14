@@ -9,17 +9,15 @@ interface IQuery {
   code?: ParsedUrlQuery;
 }
 
-const callback = () => {
+const Callback = () => {
   const router = useRouter();
 
   const sendToken = async (discord: string) => {
     const result = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND}/api/v1/auth/signin`, {
       discord,
     });
-    const user = result.data.name.split('#');
     Cookies.set('email', result.data.email);
-    Cookies.set('name', user[0]);
-    Cookies.set('tag', `#${user[1]}`);
+    Cookies.set('name', result.data.name);
   };
 
   const getToken = async () => {
@@ -33,11 +31,10 @@ const callback = () => {
       grantType: 'authorization_code',
       redirectUri: process.env.NEXT_PUBLIC_REDIRECT_URI,
     });
-    localStorage.setItem('refreshToken', discord.refresh_token);
-    localStorage.setItem('accessToken', discord.access_token);
-    Cookies.set('loginType', 'discord');
+    Cookies.set('refreshToken', discord.refresh_token);
+    Cookies.set('accessToken', discord.access_token);
     sendToken(discord.access_token);
-    Router.push('/signin');
+    Router.push('/');
   };
   useEffect(() => {
     getToken();
@@ -45,4 +42,4 @@ const callback = () => {
   return <div />;
 };
 
-export default callback;
+export default Callback;

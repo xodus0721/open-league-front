@@ -5,14 +5,12 @@ import React, { useEffect, useState } from 'react';
 const Index = () => {
   const [accessToken, setAccessToken] = useState(null);
 
-  const [UserInfo, setUserInfo] = useState({
-    name: Cookies.get('name') !== null ? Cookies.get('name') : '',
-    tag: Cookies.get('tag') !== null ? Cookies.get('tag') : '',
-  });
+  const [UserName, setUserName] = useState('');
 
   useEffect(() => {
-    if (localStorage.getItem('accessToken') !== null) {
-      setAccessToken(localStorage.getItem('accessToken'));
+    if (Cookies.get('accessToken') !== null && Cookies.get('name') !== null) {
+      setUserName(Cookies.get('name'));
+      setAccessToken(Cookies.get('accessToken'));
     }
   }, []);
 
@@ -21,20 +19,21 @@ const Index = () => {
       <div>
         {accessToken ? (
           <div>
-            <div>
-              <span>{UserInfo.name}</span>
-              <span>{UserInfo.tag}</span>
-            </div>
             <Link href="/logout">Log out</Link>
+            <br />
+            <Link href="/friends">Friends Page</Link>
+            <div>
+              <span>Profile: </span>
+              <span>{UserName}</span>
+            </div>
           </div>
         ) : (
           <div>
             <Link href="/signin">Sign In Page</Link>
+            <br />
+            <Link href="/signup">Sign Up Page</Link>
           </div>
         )}
-        <Link href="/signup">Sign Up Page</Link>
-        <br />
-        <Link href="/friends">Friends Page</Link>
       </div>
       <br />
     </div>

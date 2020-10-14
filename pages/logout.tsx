@@ -8,18 +8,16 @@ const logout = () => {
     try {
       await axios.post(`${process.env.NEXT_PUBLIC_BACKEND}/api/v1/auth/revoke`, undefined, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+          Authorization: `Bearer ${Cookies.get('accessToken')}`,
         },
       });
       await axios.post(`${process.env.NEXT_PUBLIC_BACKEND}/api/v1/auth/revoke`, undefined, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem('refreshToken')}`,
+          Authorization: `Bearer ${Cookies.get('refreshToken')}`,
         },
       });
-      localStorage.removeItem('accessToken');
-      localStorage.removeItem('refreshToken');
-      Cookies.remove('loginType');
-      Cookies.remove('tag');
+      Cookies.remove('accessToken');
+      Cookies.remove('refreshToken');
       Cookies.remove('name');
       Cookies.remove('email');
     } finally {
