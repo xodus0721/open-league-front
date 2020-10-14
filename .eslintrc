@@ -26,6 +26,8 @@
     ],
     "jsx-a11y/anchor-is-valid": "off",
     "import/no-unresolved": "off",
-    "import/extensions": ["off"]
+    "import/extensions": ["off"],
+    "no-underscore-dangle": "off"
+    
   }
 }
