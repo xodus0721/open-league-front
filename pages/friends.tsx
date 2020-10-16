@@ -143,6 +143,7 @@ const Friends = () => {
       <div>{status}</div>
       <br />
       <h1>Friends List</h1>
+      <div>If you want to delete friend, double click card! </div>
       {friendsList.length !== 0 ? (
         <ProfileList friendsData={friendsList} deleteFriend={deleteFriend} />
       ) : (

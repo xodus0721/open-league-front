@@ -45,7 +45,7 @@ const SignIn = () => {
             setStatus('계정이 존재하지 않습니다.');
             break;
           case 412:
-            setStatus('입력란에 공백이 있습니다.');
+            setStatus('데이터가 누락되었습니다');
             break;
           default:
             setStatus('알 수 없는 오류가 발생했습니다.');
